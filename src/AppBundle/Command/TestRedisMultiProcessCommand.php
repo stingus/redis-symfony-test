@@ -10,7 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\ProcessBuilder;
 
-class TestRedisCommand extends ContainerAwareCommand
+class TestRedisMultiProcessCommand extends ContainerAwareCommand
 {
     /**
      * {@inheritdoc}
@@ -18,7 +18,7 @@ class TestRedisCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('test:redis')
+            ->setName('test:redis:multi')
             ->setDescription('Test message write to Redis using parallel processes')
             ->addArgument('count', InputArgument::REQUIRED, 'How many messages to send')
             ->addArgument('size', InputArgument::OPTIONAL, 'Message size in KB', 10)
