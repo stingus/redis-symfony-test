@@ -50,17 +50,21 @@ class TestRedisSingleProcessCommand extends ContainerAwareCommand
         }
 
         $output->writeln('');
-        $output->write('Saving to Redis...');
+        $output->writeln('Saving to Redis...');
         $str = str_repeat('x', $size * 1024);
         $ts1 = microtime(true);
+        $progressSave = new ProgressBar($output, $count);
+        $progressSave->start();
         for ($i = 1; $i <= $count; $i++) {
             $redisService->hmset(
-                $this->getContainer()->getParameter('redis_prefix') . $i,
+                $keyPrefix . $i,
                 ['msg' => $str, 'ts' => microtime(true)]
             );
+            $progressSave->advance();
         }
         $ts2 = microtime(true);
 
-        $output->writeln(' done in ' . round(($ts2 - $ts1), 2) . ' sec');
+        $output->writeln('');
+        $output->writeln('Done in ' . round(($ts2 - $ts1), 2) . ' sec');
     }
 }
